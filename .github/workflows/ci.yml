@@ -11,15 +11,40 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: リポジトリをチェックアウト
-        uses: actions/checkout@v4
+　　　  user: actions/checkout@v4
 
       - name: Node.jsをセットアップ
-        uses: actions/setup-node@v4
+        user: actions/setup-node@v4
         with:
           node-version: '20'
 
       - name: 依存パッケージをインストール
         run: npm install
 
+
       - name: テストを実行
         run: npm test
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: GHCRにログイン
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: イメージをビルドしてプッシュ
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/${{ github.repository }}:latest
