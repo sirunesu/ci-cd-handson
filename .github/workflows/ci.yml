@@ -64,3 +64,12 @@ jobs:
           context: .
           push: true
           tags: ${{ steps.ecr-login.outputs.registry }}/ci-cd-handson:latest
+
+      - name: Deploy to ECS Express Mode
+        uses: aws-actions/amazon-ecs-deploy-express-service@v1
+        with:
+          service-name: ci-cd-handson-service
+          image: ${{ steps.ecr-login.outputs.registry }}/ci-cd-handson:latest
+          execution-role-arn: arn:aws:iam::271434548535:role/ecsTaskExecutionRolePolicy
+          infrastructure-role-arn: arn:aws:iam::271434548535:role/ecsInfrastructureRoleForExpressServices
+          container-port: 3000
