@@ -11,9 +11,7 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "jest": "^30.5.1"
-  },
-  "devDependencies": {
+    "jest": "^30.5.1",
     "lodash": "^4.17.15"
   }
 }
