@@ -12,5 +12,8 @@
   "type": "commonjs",
   "dependencies": {
     "jest": "^30.5.1"
+  },
+  "devDependencies": {
+    "lodash": "^4.17.15"
   }
 }
